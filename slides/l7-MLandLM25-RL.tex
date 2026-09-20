@@ -4,10 +4,18 @@
 {
        \usetheme{metropolis}
 }
+\metroset{sectionpage=none}
+\usefonttheme{default}
+\definecolor{darkgreen}{HTML}{1B5E20}
+\setbeamercolor{alerted text}{fg=darkgreen}
+\setbeamercolor{palette primary}{fg=white,bg=darkgreen}
+\setbeamercolor{frametitle}{fg=white,bg=darkgreen}
+\setbeamercolor{progress bar}{fg=darkgreen,bg=darkgreen!30!white}
+\setbeamercolor{title separator}{fg=darkgreen,bg=darkgreen}
 \usepackage{latexsym}
 \usepackage{verbatim}
 \usepackage{amssymb, amsmath}
-\usepackage{graphicx, graphics,txfonts}
+\usepackage{graphicx, graphics}
 \usepackage{tikz-qtree}
 %\usepackage{qtree}
 %\usepackage{etex}
@@ -19,6 +27,7 @@
 \newcommand{\tuple}[1]{\langle #1 \rangle}
 \newcommand{\norm}[1]{\left\| #1 \right\|}
 \newcommand{\bin}[2]{\left(#1\atop{#2}\right)}
+\newcommand{\missingfigure}[1]{\begin{center}\fbox{\parbox{.88\linewidth}{\centering\vspace{1em}\textit{#1}\vspace{1em}}}\end{center}}
 
 \graphicspath{{../figures/}}
 
@@ -45,26 +54,112 @@
 %\includegraphics[page=5,width=\linewidth]{../figures/Week5_RL_slides}\\
 
 \section{What is Reinforcement Learning?}
+
 \begin{frame}{Plan}
 \tableofcontents[currentsection]
 \end{frame}
 
-\includegraphics[page=6,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=7,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=8,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=9,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=10,width=\linewidth]{../figures/Week5_RL_slides}\\
+\begin{frame}{Types of learning algorithms}
+\begin{itemize}
+    \item \textbf{Supervised learning}: learning from labeled examples, such as neural networks
+    \item \textbf{Unsupervised learning}: finding patterns in raw data, such as clustering
+    \item \textbf{Reinforcement learning}: learning from reward signals
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reinforcement learning}
+\begin{block}{A structural model from behavioral psychology}
+\begin{description}
+    \item[Pavlov, 1897] Pavlovian learning / classical conditioning\\
+    Agent learns a stimulus--outcome contingency
+    \item[Thorndike, 1905] Law of effect / instrumental conditioning\\
+    Agent learns an action--outcome contingency
+    \item[Tolman, 1930] Latent learning / goal-directed learning\\
+    Agent learns a cognitive map
+\end{description}
+\end{block}
+\end{frame}
+
+\begin{frame}{Reinforcement learning}
+\begin{columns}[T]
+\column{.47\linewidth}
+\textbf{Structural model}
+\begin{itemize}
+    \item Classical conditioning
+    \item Instrumental conditioning
+    \item Goal-directed learning
+\end{itemize}
+\column{.47\linewidth}
+\textbf{Cognitive model}
+\begin{itemize}
+    \item Rescorla--Wagner model (1972)
+    \item Temporal-difference learning (Samuel, 1959)
+    \item Q-learning (Watkins \& Dayan, 1992)
+    \item Model-based learning
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Determining utility}
+\begin{columns}[T]
+\column{.54\linewidth}
+\centering
+\Large
+\[ U(S) = R(S) \]
+
+\vspace{1em}
+\textit{The value of a state depends on the reward it provides.}
+\column{.38\linewidth}
+\missingfigure{State-transition diagram from source slide 10}
+\end{columns}
+\end{frame}
 
 \begin{frame}{}
-\includegraphics[page=11,width=.5\linewidth,trim=0cm 0cm 17cm 3.8cm, clip]{../figures/Week5_RL_slides}\\
+\small
+\begin{columns}[T]
+\column{.50\linewidth}
+\missingfigure{State-transition diagram from source slide 11}
+\column{.46\linewidth}
+\begin{block}{Bellman equation}
+\[
+U(S) = R(S) + \gamma \max_A[U(S')]
+\]
+\begin{description}
+    \item[$U$] utility
+    \item[$S$] state
+    \item[$R$] reward
+    \item[$A$] action
+    \item[$\gamma$] temporal discount factor
+\end{description}
+\end{block}
+\end{columns}
 \pause
+\footnotesize
 \begin{block}{Question 1}
 Consider states $S_2$ and $S_3$ (which can you reach with action $A_1$ and $A_2$) and state $S_4$ (which you can reach from state $S_3$ by action $A_1$). How valuable are each of these states relative to eachother? Is $U(S_1)=U(S_3)$? \end{block}
 \end{frame}
 
 \begin{frame}{}
-\includegraphics[page=11,width=\linewidth]{../figures/Week5_RL_slides}\\
+\small
+\begin{columns}[T]
+\column{.50\linewidth}
+\missingfigure{State-transition diagram from source slide 11}
+\column{.46\linewidth}
+\begin{block}{Bellman equation}
+\[
+U(S) = R(S) + \gamma \max_A[U(S')]
+\]
+\begin{description}
+    \item[$U$] utility
+    \item[$S$] state
+    \item[$R$] reward
+    \item[$A$] action
+    \item[$\gamma$] temporal discount factor
+\end{description}
+\end{block}
+\end{columns}
 \pause
+\footnotesize
 \begin{block}{Question 2}
 How do you avoid having to first learn everything about the environment/problem before you can start acting in the world?
 \end{block}
@@ -75,11 +170,50 @@ How do you avoid having to first learn everything about the environment/problem 
 \tableofcontents[currentsection]
 \end{frame}
 
-\includegraphics[page=12,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=13,width=\linewidth]{../figures/Week5_RL_slides}\\
+\begin{frame}{Q-learning and temporal-difference learning}
+How do we learn the utility of state--action pairs by trial and error?
+
+\begin{block}{Learning the Q-value}
+\[
+Q(S,A) = \widehat{U}(S,A)
+\]
+\end{block}
+
+Q-learning approximates utility through online learning: the policy is applied and learned at the same time.
+\end{frame}
+
+\begin{frame}{Q-learning update rule}
+\small
+\begin{block}{Prediction error}
+\[
+\delta = R + \gamma \max_{A'} Q_t(S',A') - Q_t(S,A)
+\]
+\end{block}
+\begin{block}{Q-value update}
+\[
+Q_{t+1}(S,A) = Q_t(S,A) + \alpha\delta
+\]
+\end{block}
+\begin{block}{Asymptotic relationship}
+\[
+\lim_{t\to\infty} Q_t(S,A) = U(S,A)
+\]
+\end{block}
+\small
+Reminder: $U(S,A)=R(S,A)+\gamma\max_{A'}[U(S',A')]$.
+
+\vspace{.5em}
+\missingfigure{State-transition diagram from source slide 13}
+\end{frame}
 
 \begin{frame}{}
-\includegraphics[page=14,width=\linewidth,trim=0cm 5cm 5cm 0cm, clip]{../figures/Week5_RL_slides}\\
+\begin{block}{Q-learning action-selection policy}
+Suppose we are in state $S$, with possible actions $A_1$ and $A_2$, and
+\[
+Q(S,A_1)=0.5, \qquad Q(S,A_2)=0.7.
+\]
+Which action should we choose?
+\end{block}
 \pause
 \begin{block}{Question 3}
 How do you make sure you maximize reward, both in the short term (taking advantage of your knowledge) and in the long term (extending your knowledge)?
@@ -88,7 +222,26 @@ How do you make sure you maximize reward, both in the short term (taking advanta
 
 
 \begin{frame}
-\includegraphics[page=15,width=\linewidth]{../figures/Week5_RL_slides}\\
+\begin{center}
+\Large Exploration--exploitation trade-off
+
+\vspace{1em}
+\begin{columns}[T]
+\column{.44\linewidth}
+\centering
+\textbf{Exploit what you know}
+\column{.12\linewidth}
+\centering or
+\column{.44\linewidth}
+\centering
+\textbf{Explore new options}
+\end{columns}
+\end{center}
+
+\begin{quote}
+An agent has to exploit what it has experienced in order to obtain reward, but it also has to explore in order to make better action selections in the future.
+\end{quote}
+\hfill\small Sutton \& Barto (2018)
 \pause
 Classic example: \textcolor{blue}{multi-armed bandit}
 \end{frame}
@@ -102,25 +255,136 @@ Classic example: \textcolor{blue}{multi-armed bandit}
 \end{frame}
 
 
-\includegraphics[page=16,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=17,width=\linewidth]{../figures/Week5_RL_slides}\\
+\begin{frame}{Q-learning action-selection policies}
+Suppose $Q(S,A_1)=0.5$ and $Q(S,A_2)=0.7$. How should we trade off exploration and exploitation?
+
+\begin{block}{Epsilon-greedy}
+\[
+P(a_i\mid S)=
+\begin{cases}
+1-\epsilon & \text{if }q_i=\max_A q_i(A),\\
+\dfrac{\epsilon}{|A|-\max_A q_i(A)} & \text{otherwise.}
+\end{cases}
+\]
+The best action is chosen with probability $1-\epsilon$.
+\end{block}
+
+\begin{block}{Softmax}
+\[
+P(a_i\mid S)=\frac{e^{q_i/\tau}}{\sum_A e^{q_i/\tau}}
+\]
+For $\tau\to0$ the policy is greedy; for $\tau\to\infty$ it is random.
+\end{block}
+\end{frame}
+
+\begin{frame}{Q-learning pseudo-code}
+\begin{enumerate}
+    \item Set $\alpha\in[0,1]$, small $\epsilon>0$, and $\gamma>0$.
+    \item Initialize $Q(s,a)$ for all $s\in S$ and $a\in A$ to $0$.
+    \item Initialize $s$.
+    \item For each episode:
+    \begin{enumerate}
+        \item While $s$ is not terminal:
+        \begin{enumerate}
+            \item Choose $a$ from $s$ using the action-selection policy.
+            \item Observe reward $R$ and next state $s'$.
+            \item Update $Q$ and set $s\leftarrow s'$.
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+\end{frame}
 
 \section{RL in the brain}
 \begin{frame}{Plan}
 \tableofcontents[currentsection]
 \end{frame}
-\includegraphics[page=18,width=\linewidth]{../figures/Week5_RL_slides}\\
+\begin{frame}{Temporal-difference learning in the brain}
+\small
+\begin{columns}[T]
+\column{.54\linewidth}
+\missingfigure{Dopaminergic-neuron recording chart from source slide 18}
+\column{.42\linewidth}
+\begin{itemize}
+    \item Recording from a single dopaminergic neuron in a monkey brain
+    \item Upper blue: expected reward
+    \item Red: expected reward omitted
+    \item Green: unexpected early or late reward
+    \item Lower blue: expected reward
+\end{itemize}
+\vfill
+\hfill\small Hollerman (1998)
+\end{columns}
+\end{frame}
 
 \section{Model-based RL}
 \begin{frame}{Plan}
 \tableofcontents[currentsection]
 \end{frame}
 
-\includegraphics[page=19,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=20,width=\linewidth]{../figures/Week5_RL_slides}\\
+\begin{frame}{Model-based versus model-free learning}
+\begin{columns}[T]
+\column{.47\linewidth}
+\begin{block}{Model-free (habitual)}
+Rely on trial and error. Efficient, but inflexible.
+\end{block}
+\column{.47\linewidth}
+\begin{block}{Model-based (goal-directed)}
+Build a model of the environment. Effortful, but flexible.
+\end{block}
+\end{columns}
 
-\includegraphics[page=21,width=\linewidth]{../figures/Week5_RL_slides}\\
-\includegraphics[page=22,width=\linewidth]{../figures/Week5_RL_slides}\\
+\vspace{1em}
+\begin{center}
+\textit{Dayan \& Niv (2008)}
+\end{center}
+\end{frame}
+
+\begin{frame}{Model-based reinforcement learning}
+\begin{block}{Environment model}
+\[
+M: (s,a) \mapsto (s',r)
+\]
+\end{block}
+\begin{center}
+\textit{What does my environment look like?}
+
+\vspace{.5em}
+\missingfigure{State-transition diagram from source slide 20}
+
+\small Sutton \& Barto (2018)
+\end{center}
+\end{frame}
+
+\begin{frame}{Dyna-Q pseudo-code}
+\begin{enumerate}
+    \item Initialize parameters.
+    \item For each episode, while $s$ is not terminal:
+    \begin{enumerate}
+        \item Choose $a$ from $s$ using the action-selection policy.
+        \item Observe $R$ and $s'$, update $Q$, and set $s\leftarrow s'$.
+        \item Update the model: $M(s,a)=(R,s')$.
+        \item Repeat $n$ times:
+        \begin{enumerate}
+            \item Choose $(s,a)$ to simulate.
+            \item Simulate the action and observe $R$ and $s'$.
+            \item Update $Q$.
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+\vspace{.3em}
+\small Direct RL update and model learning use real experience; planning uses simulated experience.
+\end{frame}
+
+\begin{frame}{Model-based learning: Dyna-Q}
+\begin{center}
+\textit{Policy during episode 2}
+
+\vspace{1em}
+\missingfigure{Dyna-Q policy diagram from source slide 22}
+
+\small Sutton \& Barto (2018)
+\end{center}
+\end{frame}
 %\includegraphics[page=23,width=\linewidth]{../figures/Week5_RL_slides}\\
 
 
@@ -129,7 +393,13 @@ Classic example: \textcolor{blue}{multi-armed bandit}
 \tableofcontents[currentsection]
 \end{frame}
 
-\includegraphics[page=38,width=\linewidth]{../figures/Week5_RL_slides}\\
+\begin{frame}{Extensions of RL algorithms}
+\begin{itemize}
+    \item \textbf{Eligibility traces}: update not only the last state--action pair, but all previously visited pairs with a decay factor $\lambda$.
+    \item \textbf{Decaying learning rate}: $\alpha$ decreases over time.
+    \item \textbf{Hybrid models}: combine model-based and model-free components.
+\end{itemize}
+\end{frame}
 
 \section{Deep RL}
 
@@ -162,11 +432,27 @@ Classic example: \textcolor{blue}{multi-armed bandit}
 \end{frame}
 
 \begin{frame}{Deep Reinforcement Learning}
-\includegraphics[page=39,width=.9\linewidth,trim=0cm 0cm 9cm 6.5cm,clip]{../figures/Week5_RL_slides}\\
+\begin{itemize}
+    \item Deep reinforcement learning
+    \item Learn Q-values with deep neural networks
+\end{itemize}
+
+\vfill
+\begin{center}
+\small A tutorial on deep reinforcement learning\\
 \url{https://wiki.pathmind.com/deep-reinforcement-learning}
+\end{center}
 \end{frame}
 
 
 
+
+% Images still needed from the original source deck:
+% 1. State/reward diagram from source slide 10.
+% 2. State/action transition diagram from source slide 11.
+% 3. State/action transition diagram beside the Q-learning update rule (source slide 13).
+% 4. Dopaminergic-neuron recording chart (source slide 18).
+% 5. Environment/state-transition diagram (source slide 20).
+% 6. Dyna-Q policy diagram for episode 2 (source slide 22).
 
 \end{document}
