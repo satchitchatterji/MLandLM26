@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{What is RL?}{2}{0}{1}
+\beamer@sectionintoc {2}{Q-learning}{11}{0}{2}
+\beamer@sectionintoc {3}{RL in the brain}{20}{0}{3}
+\beamer@sectionintoc {4}{Model-based RL}{22}{0}{4}
+\beamer@sectionintoc {5}{Extensions of Q-learning}{27}{0}{5}
+\beamer@sectionintoc {6}{Deep RL}{29}{0}{6}
