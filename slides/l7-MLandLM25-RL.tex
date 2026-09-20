@@ -1,4 +1,4 @@
-\documentclass{beamer}%[handout]
+\documentclass[aspectratio=169]{beamer}%[handout]
 
 \mode<presentation>
 {
@@ -6,6 +6,7 @@
 }
 \metroset{sectionpage=none}
 \usefonttheme{default}
+\usefonttheme[onlymath]{serif}
 \definecolor{darkgreen}{HTML}{1B5E20}
 \setbeamercolor{alerted text}{fg=darkgreen}
 \setbeamercolor{palette primary}{fg=white,bg=darkgreen}
@@ -60,44 +61,104 @@
 \end{frame}
 
 \begin{frame}{Types of learning algorithms}
-\begin{itemize}
-    \item \textbf{Supervised learning}: learning from labeled examples, such as neural networks
-    \item \textbf{Unsupervised learning}: finding patterns in raw data, such as clustering
-    \item \textbf{Reinforcement learning}: learning from reward signals
-\end{itemize}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\column{.30\textwidth}
+\raggedright
+\textbf{Supervised learning}
+
+\vspace{.4em}
+\textbf{Signal:} labeled data $(x,y)$
+
+\vspace{.4em}
+\textbf{Learn:} a predictive mapping
+\[
+\widehat{y}=f(x)\approx y
+\]
+
+\textbf{Examples:} image recognition, sentiment analysis, spam detection...
+
+\column{.02\textwidth}
+\centering
+\textcolor{darkgreen}{\rule{0.5pt}{0.60\textheight}}
+
+\column{.30\textwidth}
+\raggedright
+\textbf{Unsupervised learning}
+
+\vspace{.4em}
+\textbf{Signal:} unlabeled data $x$
+
+\vspace{.4em}
+\textbf{Learn:} structure or representation
+\[
+z=g(x)
+\]
+
+\textbf{Examples:} document clustering, dimensionality reduction, anomaly detection...
+
+\column{.02\textwidth}
+\centering
+\textcolor{darkgreen}{\rule{0.5pt}{0.60\textheight}}
+
+\column{.30\textwidth}
+\raggedright
+\textbf{Reinforcement learning}
+
+\vspace{.4em}
+\textbf{Signal:} rewards from interaction
+
+\vspace{.4em}
+\textbf{Learn:} values or a policy
+\[
+\begin{aligned}
+Q(s,a)&\approx\text{future reward},\\
+\pi(a\mid s)&\text{ chooses actions.}
+\end{aligned}
+\]
+
+\textbf{Examples:} robot navigation, game playing, dialogue systems...
+\end{columns}
+
+% \vfill
+% \begin{alertblock}{Key distinction}
+% The learning signal comes from\\
+% labels, structure in the data,\\
+% or rewards from interaction.
+% \end{alertblock}
 \end{frame}
 
 \begin{frame}{Reinforcement learning}
-\begin{block}{A structural model from behavioral psychology}
+\small
+\begin{block}{A structural model from behavioral psychology...}
 \begin{description}
-    \item[Pavlov, 1897] Pavlovian learning / classical conditioning\\
-    Agent learns a stimulus--outcome contingency
-    \item[Thorndike, 1905] Law of effect / instrumental conditioning\\
-    Agent learns an action--outcome contingency
-    \item[Tolman, 1930] Latent learning / goal-directed learning\\
-    Agent learns a cognitive map
+    \item[Pavlov (1897)] Classical conditioning\\
+    Learn a stimulus--outcome contingency
+    \item[Thorndike (1905)] Law of effect / instrumental conditioning\\
+    Learn an action--outcome contingency
+    \item[Tolman (1930)] Latent / goal-directed learning\\
+    Learn a cognitive map of the environment
 \end{description}
 \end{block}
+\begin{alertblock}{Common idea:}
+Experience changes future behavior according to its consequences.
+\end{alertblock}
 \end{frame}
 
 \begin{frame}{Reinforcement learning}
-\begin{columns}[T]
-\column{.47\linewidth}
-\textbf{Structural model}
-\begin{itemize}
-    \item Classical conditioning
-    \item Instrumental conditioning
-    \item Goal-directed learning
-\end{itemize}
-\column{.47\linewidth}
-\textbf{Cognitive model}
-\begin{itemize}
-    \item Rescorla--Wagner model (1972)
-    \item Temporal-difference learning (Samuel, 1959)
-    \item Q-learning (Watkins \& Dayan, 1992)
-    \item Model-based learning
-\end{itemize}
-\end{columns}
+\small
+\begin{block}{... formalized by AI as computational models}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}p{.36\linewidth}cp{.46\linewidth}@{}}
+\textbf{Behavioral description} & & \textbf{Cognitive / AI model}\\
+Classical conditioning & $\longrightarrow$ & Rescorla--Wagner model (1972)\\
+Instrumental conditioning & $\longrightarrow$ & Temporal-difference learning (Samuel, 1959)\\
+ & & Q-learning (Watkins \& Dayan, 1992)\\
+Goal-directed learning & $\longrightarrow$ & Model-based learning
+\end{tabular}
+\end{block}
+% \vfill
+% The computational models differ in what they learn from experience: predictions, action values, or an explicit model of the environment.
 \end{frame}
 
 \begin{frame}{Determining utility}
@@ -202,7 +263,7 @@ Q_{t+1}(S,A) = Q_t(S,A) + \alpha\delta
 \small
 Reminder: $U(S,A)=R(S,A)+\gamma\max_{A'}[U(S',A')]$.
 
-\vspace{.5em}
+\vspace{-1em}
 \missingfigure{State-transition diagram from source slide 13}
 \end{frame}
 
@@ -409,7 +470,7 @@ M: (s,a) \mapsto (s',r)
 
 
 \begin{frame}{Deep Reinforcement Learning}
-\centerline{\includegraphics[width=\linewidth,trim=3cm 2.5cm 3cm 0cm,clip]{../figures/deepRLscheme_mnih_etal15nature}}
+\centerline{\includegraphics[height=.75\textheight,keepaspectratio,trim=3cm 2.5cm 3cm 0cm,clip]{../figures/deepRLscheme_mnih_etal15nature}}
 \end{frame}
 
 \begin{frame}{Deep Q-Learning (Mnih et al. 2015)}
