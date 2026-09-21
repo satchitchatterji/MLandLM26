@@ -62,7 +62,7 @@
 \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{Types of learning algorithms}
+\begin{frame}{Types of Learning Algorithms}
 \footnotesize
 \begin{columns}[T,onlytextwidth]
 \column{.30\textwidth}
@@ -130,7 +130,7 @@ Q(s,a)&\approx\text{future reward},\\
 % \end{alertblock}
 \end{frame}
 
-\begin{frame}{Reinforcement learning}
+\begin{frame}{Reinforcement Learning}
 \small
 \begin{block}{A structural model from behavioral psychology...}
 \begin{description}
@@ -147,7 +147,7 @@ Experience changes future behavior according to its consequences.
 \end{alertblock}
 \end{frame}
 
-\begin{frame}{Reinforcement learning}
+\begin{frame}{Reinforcement Learning}
 \small
 \begin{block}{... formalized by AI as computational models}
 \renewcommand{\arraystretch}{1.5}
@@ -163,7 +163,7 @@ Goal-directed learning & $\longrightarrow$ & Model-based learning
 % The computational models differ in what they learn from experience: predictions, action values, or an explicit model of the environment.
 \end{frame}
 
-\begin{frame}{Agent-Environment interaction loop}
+\begin{frame}{Agent-Environment Interaction Loop}
 \centering
 \includegraphics[width=0.8\linewidth,keepaspectratio]{../figures/agent_environment_interaction.png}
 \begin{enumerate}
@@ -241,7 +241,7 @@ Goal-directed learning & $\longrightarrow$ & Model-based learning
 % \end{frame}
 
 \section{Markov Decision Processes}
-\begin{frame}{How do we define an RL problem? \textit{Markov Decision Processes}}
+\begin{frame}{How Do We Define an RL Problem? \textit{Markov Decision Processes}}
 \footnotesize
 \begin{block}{Definition}
 A Markov decision process (MDP) is a mathematical model of sequential decision-making:
@@ -263,13 +263,13 @@ A Markov decision process (MDP) is a mathematical model of sequential decision-m
 \end{alertblock}
 \end{frame}
 
-\begin{frame}{MDP example: a robot in a maze}
+\begin{frame}{MDP Example: A Robot in a Maze}
 \begin{center}
 \includegraphics[height=.78\textheight,keepaspectratio]{../figures/maze1.png}
 \end{center}
 \end{frame}
 
-\begin{frame}{MDP example: state space}
+\begin{frame}{MDP Example: State Space}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -291,7 +291,7 @@ Each state identifies one maze cell.
 \end{columns}
 \end{frame}
 
-\begin{frame}{MDP example: action space}
+\begin{frame}{MDP Example: Action Space}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -315,7 +315,7 @@ The action attempts to move the robot to a neighboring cell.
 \end{columns}
 \end{frame}
 
-\begin{frame}{MDP example: transition function}
+\begin{frame}{MDP Example: Transition Function}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -347,7 +347,7 @@ s_{11,10}=\mathrm{goal}
 \end{columns}
 \end{frame}
 
-\begin{frame}{MDP example: state-reward function}
+\begin{frame}{MDP Example: State-Reward Function}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -379,7 +379,7 @@ The goal state is valuable; all other states have zero immediate reward.
 \end{frame}
 
 
-\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{frame}{MDP Example: $\gamma$-Discounting and Utility}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -405,7 +405,7 @@ Consider states $s_1$ to $s_4$. Which states are reachable from the current stat
 \end{frame}
 
 
-\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{frame}{MDP Example: $\gamma$-Discounting and Utility}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -429,7 +429,7 @@ What are the immediate rewards for $s_1$ and $s_2$? How does the `value' (utilit
 \end{columns}
 \end{frame}
 
-\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{frame}{MDP Example: $\gamma$-Discounting and Utility}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -454,7 +454,7 @@ How does $U(s_2)$ compare to $U(s_3)$? How does $U(s_3)$ compare to $U(s_4)$?
 \end{frame}
 
 
-\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{frame}{MDP Example: $\gamma$-Discounting and Utility}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -483,7 +483,7 @@ $R(s)$: 100 for {\emoji ★}, 0 otherwise\newline
 \end{columns}
 \end{frame}
 
-\begin{frame}{MDP example: Bellman optimality}
+\begin{frame}{MDP Example: Bellman Optimality}
 \begin{columns}[T]
 \column{.48\linewidth}
 \centering
@@ -553,7 +553,7 @@ U^*(s) = R(s) + \gamma \max_{a\in\mathcal{A}} U^*(T(s,a))
 \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{From state values to action values}
+\begin{frame}{From State Values to Action Values}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.63\textwidth}
 \footnotesize
@@ -593,7 +593,7 @@ $Q(s,a)$ lets the agent compare actions directly and choose
 \end{columns}
 \end{frame}
 
-\begin{frame}{Q-learning update rule (\textit{Temporal-Difference learning})}
+\begin{frame}{Q-Learning Update Rule (\textit{Temporal-Difference Learning})}
 \footnotesize
 The Q-learning update rule is a form of \textit{temporal-difference learning}, which updates the action value $Q(s,a)$ based on the observed reward and the estimated future rewards. \textit{\tiny{(Watkins \& Dayan, 1992)}}
 \begin{block}{Q-value update}
@@ -619,7 +619,7 @@ For a deterministic transition function: $Q^*(s,a)=R(s)+\gamma\max_{a'\in\mathca
 % \missingfigure{State-transition diagram from source slide 13}
 \end{frame}
 
-\begin{frame}{Q-learning action-selection policy}
+\begin{frame}{Q-Learning Action-Selection Policy}
 \begin{block}{}
 Suppose we are in state $s$, with possible actions $a_1$ and $a_2$, and
 \[
@@ -634,7 +634,7 @@ Which action should we choose?
 \end{center}
 \end{frame}
 
-\begin{frame}{Q-learning action-selection policy}
+\begin{frame}{Q-Learning Action-Selection Policy}
 \begin{block}{}
 Suppose we are in state $s$, with possible actions $a_1$ and $a_2$, and
 \[
@@ -648,7 +648,7 @@ Which action should we choose?
 \end{center}
 \end{frame}
 
-\begin{frame}{Q-learning action-selection policy}
+\begin{frame}{Q-Learning Action-Selection Policy}
 \begin{block}{}
 Suppose we are in state $s$, with possible actions $a_1$ and $a_2$, and
 \[
@@ -661,7 +661,7 @@ When should an agent exploit the action it currently believes is best, and when 
 \end{frame}
 
 
-\begin{frame}{Exploration--exploitation trade-off}
+\begin{frame}{Exploration--Exploitation Trade-Off}
 \begin{center}
 % \Large Exploration--exploitation trade-off
 
@@ -688,7 +688,7 @@ An agent has to exploit what it has experienced in order to obtain reward, but i
 Classic example: \textcolor{blue}{multi-armed bandit}
 \end{frame}
 
-\begin{frame}{Multi-armed bandit}
+\begin{frame}{Multi-Armed Bandit}
 \includegraphics[width=.32\linewidth]{../figures/one-armed-bandit-slot-781x512}
 \includegraphics[width=.32\linewidth]{../figures/one-armed-bandit-slot-781x512}
 \includegraphics[width=.32\linewidth]{../figures/one-armed-bandit-slot-781x512}\\
@@ -697,7 +697,7 @@ Classic example: \textcolor{blue}{multi-armed bandit}
 \end{frame}
 
 
-\begin{frame}{Q-learning exploration policies}
+\begin{frame}{Q-Learning Exploration Policies}
 Suppose $Q(s,a_1)=0.5$ and $Q(s,a_2)=0.7$. How should we trade off exploration and exploitation?
 
 \begin{block}{Epsilon-greedy}
@@ -719,7 +719,7 @@ Exponentially scale the action values and normalize to get a probability distrib
 \end{block}
 \end{frame}
 
-\begin{frame}{Q-learning pseudo-code}
+\begin{frame}{Q-Learning Pseudo-Code}
 \begin{enumerate}
     \item Set $\alpha\in(0,1]$, $\gamma\in[0,1)$, and small $\epsilon\in(0,1]$ or $\tau>0$.
     \item Initialize $Q(s,a)=0$ for all $s\in \mathcal{S}$ and $a\in \mathcal{A}$.
@@ -741,13 +741,13 @@ Exponentially scale the action values and normalize to get a probability distrib
 \begin{frame}{Plan}
 \tableofcontents[currentsection]
 \end{frame}
-\begin{frame}{RL in the brain}
+\begin{frame}{RL in the Brain}
 \centering
 \vfill
 \includegraphics[height=0.68\textheight]{../figures/empty_brain.png}
 \vfill
 \end{frame}
-\begin{frame}{Temporal-difference learning in the brain}
+\begin{frame}{Temporal-Difference Learning in the Brain}
 \centering
 \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{../figures/temporal_difference_dopamine.png}
 \end{frame}
@@ -757,12 +757,12 @@ Exponentially scale the action values and normalize to get a probability distrib
 \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{Model-based versus model-free learning}
+\begin{frame}{Model-Based Versus Model-Free Learning}
 \centering
 \includegraphics[height=0.80\textheight,keepaspectratio]{../figures/model_based_model_free.png}
 \end{frame}
 
-\begin{frame}{Model-based reinforcement learning}
+\begin{frame}{Model-Based Reinforcement Learning}
 \small
 \begin{block}{Environment model}
 \[
@@ -778,12 +778,12 @@ Model-based RL can adapt quickly when conditions change, but planning is computa
 \end{alertblock}
 \end{frame}
 
-\begin{frame}{Dyna-Q pseudo-code}
+\begin{frame}{Dyna-Q Pseudo-Code}
 \centering
 \includegraphics[width=\linewidth,height=0.82\textheight,keepaspectratio]{../figures/dyna_q_pseudocode.png}
 \end{frame}
 
-\begin{frame}{Model-based learning: Dyna-Q}
+\begin{frame}{Model-Based Learning: Dyna-Q}
 \centering
 \includegraphics[height=0.82\textheight,keepaspectratio]{../figures/dyna_q_maze_policy.png}
 \end{frame}
@@ -795,7 +795,7 @@ Model-based RL can adapt quickly when conditions change, but planning is computa
 \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{Extensions of Base RL algorithms}
+\begin{frame}{Extensions of Base RL Algorithms}
 \small
 \begin{itemize}
     \item \textbf{Decaying learning rate}: $\alpha$ decreases over time.
