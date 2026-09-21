@@ -35,7 +35,7 @@
 \graphicspath{{../figures/}}
 
 \title{Lecture 7: Reinforcement Learning}
-\author{Satchit Chatterji\\ SIAS Group, IvI, Universiteit van Amsterdam \\ \textit{\tiny{(based on a slideset by Jelle Zuidema \& Iris Proff)}}}
+\author{Satchit Chatterji\\ SIAS Group, IvI, Universiteit van Amsterdam \\ \textit{\tiny{(based on earlier slidesets by Jelle Zuidema \& Iris Proff)}}}
 \institute{}
 \date{Machine Learning and Language Models, 2026}
 
@@ -43,6 +43,12 @@
 
 \begin{frame}
 \titlepage
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,xshift=-0.8cm,yshift=0.9cm] at (current page.south east)
+    {\includegraphics[height=1.3cm]{../figures/uvalogo.svg.png}};
+\node[anchor=south east,xshift=-2.55cm,yshift=0.9cm] at (current page.south east)
+    {\includegraphics[height=1.3cm]{../figures/siaslogo.jpeg}};
+\end{tikzpicture}
 \end{frame}
 
 %\section{Introduction}
@@ -856,9 +862,9 @@ Model-based RL can adapt quickly when conditions change, but planning is computa
 \delta_t = \overbrace{R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_t(s_{t+1},a)}^{\text{\scriptsize target}}
            \phantom{..} - \overbrace{Q_t(s_t,a_t)}^{\text{\scriptsize current estimate}}
 \]
-    \item In DQN, we replace the Q-table with a neural network $Q_\theta(s,a)$, and we train it to minimize the prediction error, rewritten as a mean squared error loss function between the target and the current estimate:
+    \item In DQN, we replace the Q-table with a neural network $Q_\theta(s,a)$ and minimize the prediction error using a separate target network $Q_{\bar\theta}$:
     \[
-    \mathcal{L}(\theta) = \mathbb{E}_{(s_t,a_t,r_t,s_{t+1})\sim D}\left[\left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_\theta(s_{t+1},a) - Q_\theta(s_t,a_t)\right)^2\right]
+    \mathcal{L}(\theta) = \mathbb{E}_{(s_t,a_t,r_t,s_{t+1})\sim D}\left[\left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_{\bar\theta}(s_{t+1},a) - Q_\theta(s_t,a_t)\right)^2\right]
     \]
 \end{itemize}
 \end{frame}
@@ -869,9 +875,25 @@ Model-based RL can adapt quickly when conditions change, but planning is computa
     Then uniformly sample mini-batches of transitions from the buffer to train the network. This breaks correlations between sequential data and stabilizes training.
     \item Training is done by stochastic gradient descent on the loss function $\mathcal{L}(\theta)$, using the sampled mini-batches:
     \[
-    \nabla \mathcal{L}(\theta) \approx \frac{1}{N}\sum_{i=1}^{N}\nabla \left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_\theta(s_{t+1},a) - Q_\theta(s_t,a_t)\right)^2
+    \nabla \mathcal{L}(\theta) \approx \frac{1}{N}\sum_{i=1}^{N}\nabla \left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_{\bar\theta}(s_{t+1},a) - Q_\theta(s_t,a_t)\right)^2
     \]
 \end{itemize}
+\end{frame}
+
+\begin{frame}{DQN Stabilization: Target Networks}
+\small
+\begin{block}{Two networks}
+The \textbf{online network} $Q_\theta$ learns from gradient updates. The \textbf{target network} $Q_{\bar\theta}$ provides a temporarily fixed target.
+\end{block}
+\[
+y_t = R(s_{t+1}) + \gamma(1-d_t)\max_{a\in\mathcal{A}}Q_{\bar\theta}(s_{t+1},a)
+\]
+\begin{block}{Slowly update the target}
+Every $K$ gradient steps, copy the online weights: \(\bar\theta \leftarrow \theta\). Here $d_t=1$ when the next state is terminal.
+\end{block}
+\begin{alertblock}{Why?}
+Keeping the target fixed for several updates makes learning more stable: the network is not chasing a target that changes at every step.
+\end{alertblock}
 \end{frame}
 
 \begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
@@ -894,6 +916,23 @@ Model-based RL can adapt quickly when conditions change, but planning is computa
 \end{center}
 \end{frame}
 
+\begin{frame}{Reinforcement Learning for Language Models}
+\small
+\begin{block}{An RL problem over generated text}
+\begin{itemize}
+    \item \textbf{State:} a prompt and the tokens generated so far.
+    \item \textbf{Action:} the next token, sampled from $\pi_\theta(\text{token}\mid\text{context})$.
+    \item \textbf{Reward:} a human preference, AI feedback, a verifier, or task success after a completion.
+\end{itemize}
+\end{block}
+\[
+\max_\theta\;\mathbb{E}_{y\sim\pi_\theta(\cdot\mid x)}\bigl[r(x,y)\bigr]
+\]
+\begin{alertblock}{Examples}
+RLHF and RLAIF use preference feedback; policy-gradient methods such as PPO or GRPO update the language-model policy.
+\end{alertblock}
+\end{frame}
+
 \begin{frame}{Frontiers}
 \small
 \begin{itemize}
@@ -905,20 +944,12 @@ Model-based RL can adapt quickly when conditions change, but planning is computa
 \end{itemize}
 
 \vfill
-\begin{alertblock}{Central challenge}
+\begin{alertblock}{Central challenge:}
 Build agents that generalize reliably beyond their training environments and improve safely from limited real-world interaction.
 \end{alertblock}
 \end{frame}
 
 
 
-
-% Images still needed from the original source deck:
-% 1. State/reward diagram from source slide 10.
-% 2. State/action transition diagram from source slide 11.
-% 3. State/action transition diagram beside the Q-learning update rule (source slide 13).
-% 4. Dopaminergic-neuron recording chart (source slide 18).
-% 5. Environment/state-transition diagram (source slide 20).
-% 6. Dyna-Q policy diagram for episode 2 (source slide 22).
 
 \end{document}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.14)  21 SEP 2026 03:22
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.14)  21 SEP 2026 03:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1095,11 +1095,15 @@ tionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 ) (./l7-MLandLM25-RL.nav)
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 46.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 52.
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <6> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 46.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 52.
+File: ../figures/uvalogo.svg.png Graphic file (type bmp)
+<../figures/uvalogo.svg.png>
+File: ../figures/siaslogo.jpeg Graphic file (type bmp)
+<../figures/siaslogo.jpeg>
 
-Overfull \vbox (44.70393pt too high) detected at line 46
+Overfull \vbox (44.70393pt too high) detected at line 52
  []
 
 
@@ -1111,19 +1115,19 @@ Overfull \vbox (44.70393pt too high) detected at line 46
 [2
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 131
+LaTeX Font Info:    Trying to load font information for U+msa on input line 137
 .
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 131
+LaTeX Font Info:    Trying to load font information for U+msb on input line 137
 .
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+lasy on input line 13
-1.
+7.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
@@ -1138,7 +1142,7 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ]
 
 Package fontspec Warning: 
-(fontspec)                \addfontfeature(s) ignored on line 164; it cannot be
+(fontspec)                \addfontfeature(s) ignored on line 170; it cannot be
 (fontspec)                used with a font that wasn't selected by a fontspec
 (fontspec)                command.
 (fontspec)                 
@@ -1158,12 +1162,12 @@ File: ../figures/agent_environment_interaction.png Graphic file (type bmp)
 
 ]
 LaTeX Font Info:    Font shape `TU/lmss/bx/it' in size <10.95> not available
-(Font)              Font shape `TU/lmss/bx/sl' tried instead on input line 264.
+(Font)              Font shape `TU/lmss/bx/sl' tried instead on input line 270.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <9> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 264.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 270.
 LaTeX Font Info:    Font shape `TU/lmss/bx/it' in size <12> not available
-(Font)              Font shape `TU/lmss/bx/sl' tried instead on input line 264.
+(Font)              Font shape `TU/lmss/bx/sl' tried instead on input line 270.
 
 
 
@@ -1236,7 +1240,7 @@ File: ../figures/maze_utility.png Graphic file (type bmp)
 File: ../figures/maze_solved.png Graphic file (type bmp)
 <../figures/maze_solved.png>
 
-Overfull \vbox (0.85149pt too high) detected at line 517
+Overfull \vbox (0.85149pt too high) detected at line 523
  []
 
 
@@ -1285,7 +1289,7 @@ File: ../figures/q_exp_example.png Graphic file (type bmp)
 
 ]
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 689.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 695.
 
 
 [25
@@ -1302,7 +1306,7 @@ File: ../figures/one-armed-bandit-slot-781x512.jpg Graphic file (type bmp)
 [26
 
 ]
-Overfull \vbox (19.7005pt too high) detected at line 720
+Overfull \vbox (19.7005pt too high) detected at line 726
  []
 
 
@@ -1365,7 +1369,7 @@ File: ../figures/dyna_q_maze_policy.png Graphic file (type bmp)
 [37
 
 ]
-Overfull \vbox (16.27367pt too high) detected at line 812
+Overfull \vbox (16.27367pt too high) detected at line 818
  []
 
 
@@ -1380,7 +1384,7 @@ Overfull \vbox (16.27367pt too high) detected at line 812
 File: ../figures/dq.png Graphic file (type bmp)
 <../figures/dq.png>
 
-Overfull \vbox (8.73672pt too high) detected at line 833
+Overfull \vbox (8.73672pt too high) detected at line 839
  []
 
 
@@ -1388,10 +1392,6 @@ Overfull \vbox (8.73672pt too high) detected at line 833
 [40
 
 ]
-Overfull \vbox (3.385pt too high) detected at line 864
- []
-
-
 
 [41
 
@@ -1400,11 +1400,15 @@ Overfull \vbox (3.385pt too high) detected at line 864
 [42
 
 ]
+
+[43
+
+]
 File: ../figures/deepRL_mnih_etal15nature.png Graphic file (type bmp)
 <../figures/deepRL_mnih_etal15nature.png>
 
 
-[43
+[44
 
 ]
 File: ../figures/deepRL_minh15-firstpage.png Graphic file (type bmp)
@@ -1413,15 +1417,19 @@ File: ../figures/learningtoseeandact.png Graphic file (type bmp)
 <../figures/learningtoseeandact.png>
 
 
-[44
-
-]
-
 [45
 
 ]
 
 [46
+
+]
+
+[47
+
+]
+
+[48
 
 ]
 \tf@nav=\write6
@@ -1442,12 +1450,12 @@ Package rerunfilecheck Info: File `l7-MLandLM25-RL.out' has not changed.
 (rerunfilecheck)             Checksum: 23468DF0F4EB18C9E9D4A4007357AD92;967.
  ) 
 Here is how much of TeX's memory you used:
- 28390 strings out of 473832
- 615713 string characters out of 5729481
- 993674 words of memory out of 5000000
- 50786 multiletter control sequences out of 15000+600000
+ 28448 strings out of 473832
+ 617130 string characters out of 5729481
+ 993737 words of memory out of 5000000
+ 50841 multiletter control sequences out of 15000+600000
  569858 words of font info for 130 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  128i,15n,142p,1862b,768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on l7-MLandLM25-RL.xdv (46 pages, 285352 bytes).
+Output written on l7-MLandLM25-RL.xdv (48 pages, 302692 bytes).

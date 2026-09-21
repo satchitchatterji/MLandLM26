@@ -383,6 +383,12 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/translator/translator-theorem
 INPUT ./l7-MLandLM25-RL.nav
 INPUT ./l7-MLandLM25-RL.nav
 INPUT l7-MLandLM25-RL.nav
+INPUT ../figures/uvalogo.svg.png
+INPUT ../figures/uvalogo.svg.png
+INPUT ../figures/uvalogo.svg.png
+INPUT ../figures/siaslogo.jpeg
+INPUT ../figures/siaslogo.jpeg
+INPUT ../figures/siaslogo.jpeg
 OUTPUT l7-MLandLM25-RL.xdv
 INPUT ./l7-MLandLM25-RL.toc
 INPUT ./l7-MLandLM25-RL.toc

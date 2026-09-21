@@ -1,10 +1,10 @@
 # Fdb version 4
-["xdvipdfmx"] 1789953724.82239 "l7-MLandLM25-RL.xdv" "l7-MLandLM25-RL.pdf" "l7-MLandLM25-RL" 1789953727.41365 0
-  "l7-MLandLM25-RL.xdv" 1789953724.75898 285352 1721d63ffac7e8727084a0aaf171bbc5 "xelatex"
+["xdvipdfmx"] 1789954878.71111 "l7-MLandLM25-RL.xdv" "l7-MLandLM25-RL.pdf" "l7-MLandLM25-RL" 1789954881.36866 0
+  "l7-MLandLM25-RL.xdv" 1789954878.6516 302692 cc923c9dff3e2afc77550458228a87fb "xelatex"
   (generated)
   "l7-MLandLM25-RL.pdf"
   (rewritten before read)
-["xelatex"] 1789953723.53308 "l7-MLandLM25-RL.tex" "l7-MLandLM25-RL.xdv" "l7-MLandLM25-RL" 1789953727.41208 0
+["xelatex"] 1789954877.53293 "l7-MLandLM25-RL.tex" "l7-MLandLM25-RL.xdv" "l7-MLandLM25-RL" 1789954881.36709 0
   "../figures/agent_environment_interaction.png" 1789953338.09646 123988 afb164ce54854619688e28231c9cb9ce ""
   "../figures/deepRL_minh15-firstpage.png" 1789905040 1029449 4e17a39eeb68f6cdae09faf2a5c4c6da ""
   "../figures/deepRL_mnih_etal15nature.png" 1789905040 53167 233574a65a8afbe598c9e1b1db67150a ""
@@ -26,7 +26,9 @@
   "../figures/one-armed-bandit-slot-781x512.jpg" 1789905042 82214 57107c4e1762f65f7ce7d53852f30144 ""
   "../figures/q_exp_example.png" 1789946134.45038 20158 a3f289203c479916c70d55a3352c2766 ""
   "../figures/q_exp_example_1.png" 1789946206.8885 20210 8c83d717e5b94d4cb013ed158d9c9fe3 ""
+  "../figures/siaslogo.jpeg" 1789953936.38601 9396 526a4e5ad38656ea6a407b10603c06a9 ""
   "../figures/temporal_difference_dopamine.png" 1789949837.98556 925557 c35af47cd539918d422e199eae5963cb ""
+  "../figures/uvalogo.svg.png" 1789954071.67579 75371 346fd2d6e6fcf46e51dc329331de9408 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -255,11 +257,11 @@
   "/usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf" 1739380943 42148 61becc7c670cd061bb319c643c27fdd4 ""
   "/usr/local/texlive/2025/texmf-var/web2c/xetex/xelatex.fmt" 1752498493 5639807 3677305cbc8aff6d82db4d2f288671c1 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "l7-MLandLM25-RL.aux" 1789953724.75807 10070 9bffe08a75f85a60a6088e191e075461 "xelatex"
-  "l7-MLandLM25-RL.nav" 1789953724.7589 5532 bc6f2aa20b45e77f013eb37834a98e6a "xelatex"
-  "l7-MLandLM25-RL.out" 1789953724.75872 967 23468df0f4eb18c9e9d4a4007357ad92 "xelatex"
-  "l7-MLandLM25-RL.tex" 1789953716.61374 30397 6045f0589cd65f64cf7461301437dcfe ""
-  "l7-MLandLM25-RL.toc" 1789953724.75893 383 1ef8fe3403ab9ad7681f584eb2cd10ee "xelatex"
+  "l7-MLandLM25-RL.aux" 1789954878.6505 10454 4e1d875723e10c21d6e2c1df25786ea8 "xelatex"
+  "l7-MLandLM25-RL.nav" 1789954878.65152 5717 63643a839bf0f49a156f417c133f428e "xelatex"
+  "l7-MLandLM25-RL.out" 1789954878.65134 967 23468df0f4eb18c9e9d4a4007357ad92 "xelatex"
+  "l7-MLandLM25-RL.tex" 1789954865.87015 31681 2f41b8cb95962c3c55e016676942d5ec ""
+  "l7-MLandLM25-RL.toc" 1789954878.65155 383 1ef8fe3403ab9ad7681f584eb2cd10ee "xelatex"
   (generated)
   "l7-MLandLM25-RL.aux"
   "l7-MLandLM25-RL.log"
