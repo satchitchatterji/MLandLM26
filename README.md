@@ -1,4 +1,4 @@
-# Reinforcement Learning lecture
+# Lecture 7 for ML&LM@UvA, 2026
 
 ## Compile the slides
 
