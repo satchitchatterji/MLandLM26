@@ -141,11 +141,34 @@ Q(s,a)&\approx\text{future reward},\\
 \begin{block}{A structural model from behavioral psychology...}
 \begin{description}
     \item[Pavlov (1897)] Classical conditioning\\
-    Learn a stimulus--outcome contingency
-    \item[Thorndike (1905)] Law of effect / instrumental conditioning\\
-    Learn an action--outcome contingency
+    Learn a stimulus--outcome contingency\\
+    \textit{A bell predicts food, so the dog salivates to the bell.}
+    \item[Thorndike (1905)] Law of effect / instrumental/operant conditioning\\
+    Learn an action--outcome contingency\\
+    \textit{A monkey learns to pull a lever to get a banana.}
     \item[Tolman (1930)] Latent / goal-directed learning\\
-    Learn a cognitive map of the environment
+    Learn a cognitive map of the environment\\
+    \textit{A rat learns the layout of a maze to find food.}
+\end{description}
+\end{block}
+\begin{alertblock}{Central idea:}
+Experience changes future behavior according to its consequences.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Reinforcement Learning}
+\small
+\begin{block}{A structural model from behavioral psychology...}
+\begin{description}
+    \item[Pavlov (1897)] Classical conditioning\\
+    Learn a stimulus--outcome contingency: 
+    \textit{Bob starts feeling hungry when he hears the food-delivery app's little notification jingle}
+    \item[Thorndike (1905)] Law of effect / instrumental/operant conditioning\\
+    Learn an action--outcome contingency: 
+    \textit{Bob procrastinates because delaying work brings immediate relief, and he often still finishes before the deadline.}
+    \item[Tolman (1930)] Latent / goal-directed learning\\
+    Learn a cognitive map of the environment: 
+    \textit{When the usual study space is full, Bob uses what he knows about the building to find another quiet room.}
 \end{description}
 \end{block}
 \begin{alertblock}{Central idea:}
@@ -384,6 +407,31 @@ The goal state is valuable; all other states have zero immediate reward.
 \end{columns}
 \end{frame}
 
+\begin{frame}{MDP Example: State-Reward Function}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze1.png}
+\column{.48\linewidth}
+\footnotesize
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$
+$T(s,a)$: how actions move the robot\\
+$R(s)$: 100 for {\emoji ★}, 0 otherwise\newline
+
+% question block: how would you change the reward to make the robot prefer the shortest path to the goal?
+\begin{alertblock}{Question}
+How would you change the reward to make the robot prefer the shortest path to the goal?
+\end{alertblock}
+
+\end{columns}
+\end{frame}
 
 \begin{frame}{MDP Example: $\gamma$-Discounting and Utility}
 \begin{columns}[T]
@@ -700,6 +748,10 @@ Classic example: \textcolor{blue}{multi-armed bandit}
 \includegraphics[width=.32\linewidth]{../figures/one-armed-bandit-slot-781x512}\\
 
 {\small \it At each round, a gambler chooses one of several slot machines. Each machine has an unknown reward distribution; the goal is to maximize total reward while learning which machine is best.}
+
+\begin{alertblock}{Question}
+How should the gambler choose the next machine? Suggest an algorithm that balances trying uncertain machines with exploiting the best-looking one.
+\end{alertblock}
 \end{frame}
 
 
@@ -947,6 +999,17 @@ RLHF and RLAIF use preference feedback; policy-gradient methods such as PPO or G
 \begin{alertblock}{Central challenge:}
 Build agents that generalize reliably beyond their training environments and improve safely from limited real-world interaction.
 \end{alertblock}
+\end{frame}
+
+\begin{frame}{Topics Mentioned in Class but Not Included in These Slides}
+\small
+\begin{itemize}
+    \item \textbf{Value Iteration}: repeatedly apply Bellman optimality updates until the state values converge.
+    \item \textbf{Neurosymbolic AI}: combine neural learning with explicit symbolic rules and reasoning.
+    \item \textbf{Preference Modelling + RLHF}: learn a reward model from comparisons, then optimize a policy using that learned feedback.
+    \item \textbf{Policy-Gradient Methods}: optimize a parameterized policy directly, without first learning action values.
+    \item \textbf{Reward Hacking}: optimize a proxy reward in an unintended way rather than achieving the intended goal.
+\end{itemize}
 \end{frame}
 
 
