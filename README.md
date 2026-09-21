@@ -2,14 +2,16 @@
 
 ## Compile the slides
 
-Requirements: a LaTeX distribution with `latexmk`, Beamer, the Metropolis theme,
-and the packages used by the source file (`tikz-qtree`, `txfonts`, and `natbib`).
+Requirements: a LaTeX distribution with `latexmk`, XeLaTeX, Beamer, the
+Metropolis theme, and the packages used by the source file (`fontspec`,
+`tikz-qtree`, and `natbib`). The source uses `Arial Unicode MS` for the star
+glyph in the reward example.
 
 From the project root, run:
 
 ```sh
 cd slides
-latexmk -pdf -interaction=nonstopmode l7-MLandLM25-RL.tex
+latexmk -xelatex -interaction=nonstopmode l7-MLandLM25-RL.tex
 ```
 
 The compiled PDF is written to `slides/l7-MLandLM25-RL.pdf`.

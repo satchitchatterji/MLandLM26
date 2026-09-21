@@ -17,6 +17,8 @@
 \usepackage{verbatim}
 \usepackage{amssymb, amsmath}
 \usepackage{graphicx, graphics}
+\usepackage{fontspec}
+\newfontfamily\emoji{Arial Unicode MS}
 \usepackage{tikz-qtree}
 %\usepackage{qtree}
 %\usepackage{etex}
@@ -140,7 +142,7 @@ Q(s,a)&\approx\text{future reward},\\
     Learn a cognitive map of the environment
 \end{description}
 \end{block}
-\begin{alertblock}{Common idea:}
+\begin{alertblock}{Central idea:}
 Experience changes future behavior according to its consequences.
 \end{alertblock}
 \end{frame}
@@ -161,140 +163,519 @@ Goal-directed learning & $\longrightarrow$ & Model-based learning
 % The computational models differ in what they learn from experience: predictions, action values, or an explicit model of the environment.
 \end{frame}
 
-\begin{frame}{Determining utility}
-\begin{columns}[T]
-\column{.54\linewidth}
+\begin{frame}{Agent-Environment interaction loop}
 \centering
-\Large
-\[ U(S) = R(S) \]
+\includegraphics[width=0.8\linewidth,keepaspectratio]{../figures/agent_environment_interaction.png}
+\begin{enumerate}
+    \item The agent $p$ observes the current state $s_t$ of the environment.
+    \item It chooses an action $a_t$ to perform in that state, according to its policy $\pi(a\mid s)$.
+    \item The environment responds with a new state $s_{t+1}$ and a reward $r_{t+1}$.
+    \item The agent updates its knowledge based on the new state and reward.
+\end{enumerate}
 
-\vspace{1em}
-\textit{The value of a state depends on the reward it provides.}
-\column{.38\linewidth}
-\missingfigure{State-transition diagram from source slide 10}
-\end{columns}
 \end{frame}
 
-\begin{frame}{}
-\small
-\begin{columns}[T]
-\column{.50\linewidth}
-\missingfigure{State-transition diagram from source slide 11}
-\column{.46\linewidth}
-\begin{block}{Bellman equation}
-\[
-U(S) = R(S) + \gamma \max_A[U(S')]
-\]
-\begin{description}
-    \item[$U$] utility
-    \item[$S$] state
-    \item[$R$] reward
-    \item[$A$] action
-    \item[$\gamma$] temporal discount factor
-\end{description}
-\end{block}
-\end{columns}
-\pause
+% \begin{frame}{Determining utility}
+% \begin{columns}[T]
+% \column{.54\linewidth}
+% \centering
+% \Large
+% \[ U(S) = R(S) \]
+
+% \vspace{1em}
+% \textit{The value of a state depends on the reward it provides.}
+% \column{.38\linewidth}
+% \missingfigure{State-transition diagram from source slide 10}
+% \end{columns}
+% \end{frame}
+
+% \begin{frame}{}
+% \small
+% \begin{columns}[T]
+% \column{.50\linewidth}
+% \missingfigure{State-transition diagram from source slide 11}
+% \column{.46\linewidth}
+% \begin{block}{Bellman equation}
+% \[
+% U(S) = R(S) + \gamma \max_A[U(S')]
+% \]
+% \begin{description}
+%     \item[$U$] utility
+%     \item[$S$] state
+%     \item[$R$] reward
+%     \item[$A$] action
+%     \item[$\gamma$] temporal discount factor
+% \end{description}
+% \end{block}
+% \end{columns}
+% \pause
+% \footnotesize
+% \begin{block}{Question 1}
+% Consider states $S_2$ and $S_3$ (which can you reach with action $A_1$ and $A_2$) and state $S_4$ (which you can reach from state $S_3$ by action $A_1$). How valuable are each of these states relative to eachother? Is $U(S_1)=U(S_3)$? \end{block}
+% \end{frame}
+
+% \begin{frame}{}
+% \small
+% \begin{columns}[T]
+% \column{.50\linewidth}
+% \missingfigure{State-transition diagram from source slide 11}
+% \column{.46\linewidth}
+% \begin{block}{Bellman equation}
+% \[
+% U(S) = R(S) + \gamma \max_A[U(S')]
+% \]
+% \begin{description}
+%     \item[$U$] utility
+%     \item[$S$] state
+%     \item[$R$] reward
+%     \item[$A$] action
+%     \item[$\gamma$] temporal discount factor
+% \end{description}
+% \end{block}
+% \end{columns}
+% \pause
+% \footnotesize
+% \begin{block}{Question 2}
+% How do you avoid having to first learn everything about the environment/problem before you can start acting in the world?
+% \end{block}
+% \end{frame}
+
+\section{Markov Decision Processes}
+\begin{frame}{How do we define an RL problem? \textit{Markov Decision Processes}}
 \footnotesize
-\begin{block}{Question 1}
-Consider states $S_2$ and $S_3$ (which can you reach with action $A_1$ and $A_2$) and state $S_4$ (which you can reach from state $S_3$ by action $A_1$). How valuable are each of these states relative to eachother? Is $U(S_1)=U(S_3)$? \end{block}
+\begin{block}{Definition}
+A Markov decision process (MDP) is a mathematical model of sequential decision-making:
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr).
+\]
+\end{block}
+\begin{description}
+    \item[$\mathcal{S}$] states
+    \item[$\mathcal{A}$] actions
+    % \item[$T(s'\mid s,a)$] probability of reaching $s'$ after taking $a$ in $s$
+    \item [$T(s,a)$] transition function: returns next state after taking $a$ in $s$
+    \item[$R(s)$] immediate reward at state $s$
+    \item[$\gamma$] `discount factor' for future rewards
+\end{description}
+
+\begin{alertblock}{\normalsize{\textit{Assumption}}}
+\textit{Markov property}: the next state $s'$ depends only on the current state $s$ and action $a$.
+\end{alertblock}
 \end{frame}
 
-\begin{frame}{}
-\small
-\begin{columns}[T]
-\column{.50\linewidth}
-\missingfigure{State-transition diagram from source slide 11}
-\column{.46\linewidth}
-\begin{block}{Bellman equation}
-\[
-U(S) = R(S) + \gamma \max_A[U(S')]
-\]
-\begin{description}
-    \item[$U$] utility
-    \item[$S$] state
-    \item[$R$] reward
-    \item[$A$] action
-    \item[$\gamma$] temporal discount factor
-\end{description}
-\end{block}
-\end{columns}
-\pause
-\footnotesize
-\begin{block}{Question 2}
-How do you avoid having to first learn everything about the environment/problem before you can start acting in the world?
-\end{block}
+\begin{frame}{MDP example: a robot in a maze}
+\begin{center}
+\includegraphics[height=.78\textheight,keepaspectratio]{../figures/maze1.png}
+\end{center}
 \end{frame}
+
+\begin{frame}{MDP example: state space}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_states.png}
+\column{.48\linewidth}
+\small
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+\textbf{States}: The robot's state is its position in the maze:
+\[
+\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}.
+\]
+
+Each state identifies one maze cell.
+\end{columns}
+\end{frame}
+
+\begin{frame}{MDP example: action space}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_action.png}
+\column{.48\linewidth}
+\small
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$\newline
+
+\textbf{Actions}: At each step, the robot chooses one of four actions:
+\[
+\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}.
+\]
+
+The action attempts to move the robot to a neighboring cell.
+\end{columns}
+\end{frame}
+
+\begin{frame}{MDP example: transition function}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_transition.png}
+\column{.48\linewidth}
+\small
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$\newline
+
+\textbf{Transition function:} The transition function specifies the next state after an action:
+\[
+T(s_{5,6},\rightarrow)=s_{5,7}
+\quad\text{(path)}
+\]
+\[
+T(s_{5,6},\uparrow)=s_{5,6}
+\quad\text{(wall)}
+\]
+\[
+s_{11,10}=\mathrm{goal}
+\quad\text{(terminal state)}
+\]
+\end{columns}
+\end{frame}
+
+\begin{frame}{MDP example: state-reward function}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_reward.png}
+\column{.48\linewidth}
+\footnotesize
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$
+
+\textbf{$T(s,a)$:} how actions move the robot\newline
+
+\textbf{Reward function:} The reward depends on the state reached:
+\[
+R(s)=
+\begin{cases}
+100, & s=s_{11,10},\\
+0, & \text{otherwise.}
+\end{cases}
+\]
+
+The goal state is valuable; all other states have zero immediate reward.
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_gamma.png}
+\column{.48\linewidth}
+\footnotesize
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$\\
+$T(s,a)$: how actions move the robot\\
+$R(s)$: 100 for {\emoji ★}, 0 otherwise\newline
+
+\begin{alertblock}{Question 1}
+Consider states $s_1$ to $s_4$. Which states are reachable from the current state?
+\end{alertblock}
+
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_gamma.png}
+\column{.48\linewidth}
+\footnotesize
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$\\
+$T(s,a)$: how actions move the robot\\
+$R(s)$: 100 for {\emoji ★}, 0 otherwise\newline
+
+\begin{alertblock}{Question 2}
+What are the immediate rewards for $s_1$ and $s_2$? How does the `value' (utility) of $s_1$ compare to the value of $s_2$?
+\end{alertblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_gamma.png}
+\column{.48\linewidth}
+\footnotesize
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$\\
+$T(s,a)$: how actions move the robot\\
+$R(s)$: 100 for {\emoji ★}, 0 otherwise\newline
+
+\begin{alertblock}{Question 3}
+How does $U(s_2)$ compare to $U(s_3)$? How does $U(s_3)$ compare to $U(s_4)$?
+\end{alertblock}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{MDP example: $\gamma$-discounting and utility}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_utility.png}
+\column{.48\linewidth}
+\footnotesize
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$\\
+$T(s,a)$: how actions move the robot\\
+$R(s)$: 100 for {\emoji ★}, 0 otherwise\newline
+
+\textbf{Discount factor:} Future rewards are worth less than immediate rewards:
+\[
+\gamma \in [0,1)
+\]
+% \textbf{Utility (Bellman):} The utility of a state is the immediate reward plus the discounted utility of the next state:
+% \[
+% U^*(s) = R(s) + \gamma \max_{a\in\mathcal{A}} U^*(T(s,a))
+% \]
+\end{columns}
+\end{frame}
+
+\begin{frame}{MDP example: Bellman optimality}
+\begin{columns}[T]
+\column{.48\linewidth}
+\centering
+\includegraphics[height=.75\textheight,keepaspectratio]{../figures/maze_solved.png}
+\column{.48\linewidth}
+\scriptsize
+\vspace{-20pt}
+\begin{center}
+\[
+\mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+\]
+\end{center}
+$\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+\mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+$\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$\\
+$T(s,a)$: how actions move the robot\\
+$R(s)$: 100 for {\emoji ★}, 0 otherwise\\
+$\gamma$: discount factor for future rewards, $0\leq\gamma<1$\newline
+
+\vspace{-5pt}
+\textbf{Utility (Bellman):} immediate reward plus discounted future utility:
+\[
+U^*(s) = R(s) + \gamma \max_{a\in\mathcal{A}} U^*(T(s,a))
+\]
+
+\textbf{Goal:} learn a policy $\pi^*(s)$ that maximizes expected discounted future reward:
+\[
+\pi^*(s)=\arg\max_{a\in\mathcal{A}}U^*(T(s,a))
+\]
+\end{columns}
+\end{frame}
+
+% \begin{frame}{MDP example: Bellman optimality}
+% \begin{columns}[T]
+% \column{.48\linewidth}
+% \centering
+% \includegraphics[height=.62\textheight,keepaspectratio]{../figures/maze_gamma.png}
+% \column{.48\linewidth}
+% \tiny
+% \begin{center}
+% \[
+% \mathcal{M}=\bigl(\mathcal{S},\mathcal{A},T,R,\gamma\bigr)
+% \]
+% \end{center}
+% $\mathcal{S}=\left\{s_{\mathrm{row,col}}\ \middle|\ 
+% \mathrm{row},\mathrm{col}\in\{0,1,\ldots,11\}\right\}$
+% $\mathcal{A}=\left\{\uparrow,\downarrow,\leftarrow,\rightarrow\right\}$\\
+% $T(s,a)$: how actions move the robot\\
+% $R(s)$: 100 for {\emoji ★}, 0 otherwise\\
+% $\gamma$: discount factor for future rewards, $0\leq\gamma<1$\newline
+
+% \textbf{Bellman optimality:} choose the action with the highest discounted future utility:
+% \[
+% U^*(s) = R(s) + \gamma \max_{a\in\mathcal{A}} U^*(T(s,a))
+% \]
+
+% \textbf{Goal of reinforcement learning:} learn a policy $\pi^*(s)$ that maximizes expected future reward.
+% \[
+% \pi^*(s)=\arg\max_{a\in\mathcal{A}}U^*(T(s,a))
+% \]
+
+% \end{columns}
+% \end{frame}
 
 \section{Q-learning}
 \begin{frame}{Plan}
 \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{Q-learning and temporal-difference learning}
-How do we learn the utility of state--action pairs by trial and error?
-
-\begin{block}{Learning the Q-value}
+\begin{frame}{From state values to action values}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.63\textwidth}
+\footnotesize
+\textbf{State value:} How good is it to be in state $s$?
 \[
-Q(S,A) = \widehat{U}(S,A)
+U^*(s)=\max_{a\in\mathcal{A}}Q^*(s,a)
 \]
-\end{block}
 
-Q-learning approximates utility through online learning: the policy is applied and learned at the same time.
+\textbf{Action value:} How good is it to take action $a$ in state $s$?
+\[
+Q^*(s,a)=R(s)+\gamma U^*(T(s,a))
+\]
+
+\begin{alertblock}{Why learn $Q$?}
+$Q(s,a)$ lets the agent compare actions directly and choose
+\[
+\pi^*(s)=\arg\max_a Q^*(s,a).
+\]
+\end{alertblock}
+
+\scriptsize Q-learning learns these action values directly from experience, without first knowing the transition function $T$.
+\end{column}
+\begin{column}{0.33\textwidth}
+\vspace{0.4em}
+{\setlength{\fboxrule}{1.4pt}%
+ \setlength{\fboxsep}{1pt}%
+ \color{darkgreen}\fbox{\color{black}\begin{minipage}{0.90\linewidth}
+ \centering\tiny\textit{Recall: Utility \`a la Bellman}\par
+
+ $U^*(s)=R(s)+\gamma\max_{a\in\mathcal{A}}U^*(T(s,a))$
+ \end{minipage}}}
+\vspace{0.5em}
+\centering
+\vspace{2pt}
+\includegraphics[width=\linewidth]{../figures/maze_q.png}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}{Q-learning update rule}
-\small
-\begin{block}{Prediction error}
-\[
-\delta = R + \gamma \max_{A'} Q_t(S',A') - Q_t(S,A)
-\]
-\end{block}
+\begin{frame}{Q-learning update rule (\textit{Temporal-Difference learning})}
+\footnotesize
+The Q-learning update rule is a form of \textit{temporal-difference learning}, which updates the action value $Q(s,a)$ based on the observed reward and the estimated future rewards. \textit{\tiny{(Watkins \& Dayan, 1992)}}
 \begin{block}{Q-value update}
 \[
-Q_{t+1}(S,A) = Q_t(S,A) + \alpha\delta
+Q_{t+1}(s_t,a_t) = Q_t(s_t,a_t) + \overset{\substack{\text{\tiny learning rate}\\[-0.4ex]\downarrow}}{\alpha}\delta_t
 \]
 \end{block}
-\begin{block}{Asymptotic relationship}
+\begin{block}{Prediction (TD) error}
 \[
-\lim_{t\to\infty} Q_t(S,A) = U(S,A)
+\delta_t = \overbrace{R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_t(s_{t+1},a)}^{\text{\scriptsize target}}
+           \phantom{..} - \overbrace{Q_t(s_t,a_t)}^{\text{\scriptsize current estimate}}
 \]
 \end{block}
-\small
-Reminder: $U(S,A)=R(S,A)+\gamma\max_{A'}[U(S',A')]$.
+\begin{block}{Convergence in the limit}
+\[
+\lim_{t\to\infty} Q_t(s,a) = Q^*(s,a)
+\]
+\end{block}
+\footnotesize
+For a deterministic transition function: $Q^*(s,a)=R(s)+\gamma\max_{a'\in\mathcal{A}}Q^*(T(s,a),a')$.
 
-\vspace{-1em}
-\missingfigure{State-transition diagram from source slide 13}
+% \vspace{-1em}
+% \missingfigure{State-transition diagram from source slide 13}
 \end{frame}
 
-\begin{frame}{}
-\begin{block}{Q-learning action-selection policy}
-Suppose we are in state $S$, with possible actions $A_1$ and $A_2$, and
+\begin{frame}{Q-learning action-selection policy}
+\begin{block}{}
+Suppose we are in state $s$, with possible actions $a_1$ and $a_2$, and
 \[
-Q(S,A_1)=0.5, \qquad Q(S,A_2)=0.7.
+Q(s,a_1)=0.5, \qquad Q(s,a_2)=0.7.
 \]
 Which action should we choose?
 \end{block}
 \pause
-\begin{block}{Question 3}
-How do you make sure you maximize reward, both in the short term (taking advantage of your knowledge) and in the long term (extending your knowledge)?
+% add image: q_exp_example.png
+\begin{center}
+\includegraphics[width=0.5\linewidth]{../figures/q_exp_example_1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Q-learning action-selection policy}
+\begin{block}{}
+Suppose we are in state $s$, with possible actions $a_1$ and $a_2$, and
+\[
+Q(s,a_1)=0.5, \qquad Q(s,a_2)=0.7.
+\]
+Which action should we choose?
 \end{block}
+% add image: q_exp_example.png
+\begin{center}
+\includegraphics[width=0.5\linewidth]{../figures/q_exp_example.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Q-learning action-selection policy}
+\begin{block}{}
+Suppose we are in state $s$, with possible actions $a_1$ and $a_2$, and
+\[
+Q(s,a_1)=0.5, \qquad Q(s,a_2)=0.7.
+\]
+Which action should we choose?
+\end{block}
+\begin{block}{Question 4}
+When should an agent exploit the action it currently believes is best, and when should it explore a less certain action that might lead to greater reward?\end{block}
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}{Exploration--exploitation trade-off}
 \begin{center}
-\Large Exploration--exploitation trade-off
+% \Large Exploration--exploitation trade-off
 
 \vspace{1em}
 \begin{columns}[T]
 \column{.44\linewidth}
 \centering
+{\emoji\fontsize{36}{40}\selectfont ⌂}\par\vspace{0.2em}
 \textbf{Exploit what you know}
 \column{.12\linewidth}
 \centering or
 \column{.44\linewidth}
 \centering
+{\emoji\fontsize{36}{40}\selectfont ⌖}\par\vspace{0.2em}
 \textbf{Explore new options}
 \end{columns}
 \end{center}
@@ -303,7 +684,7 @@ How do you make sure you maximize reward, both in the short term (taking advanta
 An agent has to exploit what it has experienced in order to obtain reward, but it also has to explore in order to make better action selections in the future.
 \end{quote}
 \hfill\small Sutton \& Barto (2018)
-\pause
+% \pause
 Classic example: \textcolor{blue}{multi-armed bandit}
 \end{frame}
 
@@ -312,44 +693,45 @@ Classic example: \textcolor{blue}{multi-armed bandit}
 \includegraphics[width=.32\linewidth]{../figures/one-armed-bandit-slot-781x512}
 \includegraphics[width=.32\linewidth]{../figures/one-armed-bandit-slot-781x512}\\
 
-{\small \it The name comes from imagining a gambler at a row of slot machines ("one-armed bandits"), who has to decide which machines to play, how many times to play each machine and in which order to play them, and whether to continue with the current machine or try a different machine.}
+{\small \it At each round, a gambler chooses one of several slot machines. Each machine has an unknown reward distribution; the goal is to maximize total reward while learning which machine is best.}
 \end{frame}
 
 
-\begin{frame}{Q-learning action-selection policies}
-Suppose $Q(S,A_1)=0.5$ and $Q(S,A_2)=0.7$. How should we trade off exploration and exploitation?
+\begin{frame}{Q-learning exploration policies}
+Suppose $Q(s,a_1)=0.5$ and $Q(s,a_2)=0.7$. How should we trade off exploration and exploitation?
 
 \begin{block}{Epsilon-greedy}
 \[
-P(a_i\mid S)=
+\mathbb{P}(a_i\mid s)=
 \begin{cases}
-1-\epsilon & \text{if }q_i=\max_A q_i(A),\\
-\dfrac{\epsilon}{|A|-\max_A q_i(A)} & \text{otherwise.}
+1-\epsilon & \text{, if } a_i=\arg\max_{a'\in\mathcal{A}} Q(s,a'),\\
+\dfrac{\epsilon}{|\mathcal{A}|-1} & \text{, otherwise.}
 \end{cases}
 \]
-The best action is chosen with probability $1-\epsilon$.
+With probability $1-\epsilon$ choose the greedy action; with probability $\epsilon$ choose uniformly from the remaining. For $\epsilon\to0$ the policy is greedy; for $\epsilon\to1$ it is uniform.
 \end{block}
 
-\begin{block}{Softmax}
+\begin{block}{Softmax/Boltzmann}
 \[
-P(a_i\mid S)=\frac{e^{q_i/\tau}}{\sum_A e^{q_i/\tau}}
+\mathbb{P}(a_i\mid s)=\frac{e^{Q(s,a_i)/\tau}}{\sum_{a'\in\mathcal{A}} e^{Q(s,a')/\tau}}
 \]
-For $\tau\to0$ the policy is greedy; for $\tau\to\infty$ it is random.
+Exponentially scale the action values and normalize to get a probability distribution. For $\tau\to0$ the policy is greedy; for $\tau\to\infty$ it is uniform.
 \end{block}
 \end{frame}
 
 \begin{frame}{Q-learning pseudo-code}
 \begin{enumerate}
-    \item Set $\alpha\in[0,1]$, small $\epsilon>0$, and $\gamma>0$.
-    \item Initialize $Q(s,a)$ for all $s\in S$ and $a\in A$ to $0$.
-    \item Initialize $s$.
+    \item Set $\alpha\in(0,1]$, $\gamma\in[0,1)$, and small $\epsilon\in(0,1]$ or $\tau>0$.
+    \item Initialize $Q(s,a)=0$ for all $s\in \mathcal{S}$ and $a\in \mathcal{A}$.
+    \item Initialize $s$ to a starting state.
     \item For each episode:
     \begin{enumerate}
         \item While $s$ is not terminal:
         \begin{enumerate}
-            \item Choose $a$ from $s$ using the action-selection policy.
+            \item Choose $a$ from $s$ using an exploration policy.
             \item Observe reward $R$ and next state $s'$.
             \item Update $Q$ and set $s\leftarrow s'$.
+            \item Update $\alpha$ and $\epsilon$ or $\tau$ if desired.
         \end{enumerate}
     \end{enumerate}
 \end{enumerate}
@@ -359,22 +741,15 @@ For $\tau\to0$ the policy is greedy; for $\tau\to\infty$ it is random.
 \begin{frame}{Plan}
 \tableofcontents[currentsection]
 \end{frame}
-\begin{frame}{Temporal-difference learning in the brain}
-\small
-\begin{columns}[T]
-\column{.54\linewidth}
-\missingfigure{Dopaminergic-neuron recording chart from source slide 18}
-\column{.42\linewidth}
-\begin{itemize}
-    \item Recording from a single dopaminergic neuron in a monkey brain
-    \item Upper blue: expected reward
-    \item Red: expected reward omitted
-    \item Green: unexpected early or late reward
-    \item Lower blue: expected reward
-\end{itemize}
+\begin{frame}{RL in the brain}
+\centering
 \vfill
-\hfill\small Hollerman (1998)
-\end{columns}
+\includegraphics[height=0.68\textheight]{../figures/empty_brain.png}
+\vfill
+\end{frame}
+\begin{frame}{Temporal-difference learning in the brain}
+\centering
+\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{../figures/temporal_difference_dopamine.png}
 \end{frame}
 
 \section{Model-based RL}
@@ -383,68 +758,34 @@ For $\tau\to0$ the policy is greedy; for $\tau\to\infty$ it is random.
 \end{frame}
 
 \begin{frame}{Model-based versus model-free learning}
-\begin{columns}[T]
-\column{.47\linewidth}
-\begin{block}{Model-free (habitual)}
-Rely on trial and error. Efficient, but inflexible.
-\end{block}
-\column{.47\linewidth}
-\begin{block}{Model-based (goal-directed)}
-Build a model of the environment. Effortful, but flexible.
-\end{block}
-\end{columns}
-
-\vspace{1em}
-\begin{center}
-\textit{Dayan \& Niv (2008)}
-\end{center}
+\centering
+\includegraphics[height=0.80\textheight,keepaspectratio]{../figures/model_based_model_free.png}
 \end{frame}
 
 \begin{frame}{Model-based reinforcement learning}
+\small
 \begin{block}{Environment model}
 \[
 M: (s,a) \mapsto (s',r)
 \]
+The agent learns or uses a model that predicts the next state and reward after an action.
 \end{block}
-\begin{center}
-\textit{What does my environment look like?}
-
-\vspace{.5em}
-\missingfigure{State-transition diagram from source slide 20}
-
-\small Sutton \& Barto (2018)
-\end{center}
+\begin{block}{Planning}
+It simulates possible action sequences with this model, then chooses the action with the best predicted outcome.
+\end{block}
+\begin{alertblock}{Trade-off}
+Model-based RL can adapt quickly when conditions change, but planning is computationally expensive and depends on an accurate model.
+\end{alertblock}
 \end{frame}
 
 \begin{frame}{Dyna-Q pseudo-code}
-\begin{enumerate}
-    \item Initialize parameters.
-    \item For each episode, while $s$ is not terminal:
-    \begin{enumerate}
-        \item Choose $a$ from $s$ using the action-selection policy.
-        \item Observe $R$ and $s'$, update $Q$, and set $s\leftarrow s'$.
-        \item Update the model: $M(s,a)=(R,s')$.
-        \item Repeat $n$ times:
-        \begin{enumerate}
-            \item Choose $(s,a)$ to simulate.
-            \item Simulate the action and observe $R$ and $s'$.
-            \item Update $Q$.
-        \end{enumerate}
-    \end{enumerate}
-\end{enumerate}
-\vspace{.3em}
-\small Direct RL update and model learning use real experience; planning uses simulated experience.
+\centering
+\includegraphics[width=\linewidth,height=0.82\textheight,keepaspectratio]{../figures/dyna_q_pseudocode.png}
 \end{frame}
 
 \begin{frame}{Model-based learning: Dyna-Q}
-\begin{center}
-\textit{Policy during episode 2}
-
-\vspace{1em}
-\missingfigure{Dyna-Q policy diagram from source slide 22}
-
-\small Sutton \& Barto (2018)
-\end{center}
+\centering
+\includegraphics[height=0.82\textheight,keepaspectratio]{../figures/dyna_q_maze_policy.png}
 \end{frame}
 %\includegraphics[page=23,width=\linewidth]{../figures/Week5_RL_slides}\\
 
@@ -454,11 +795,19 @@ M: (s,a) \mapsto (s',r)
 \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{Extensions of RL algorithms}
+\begin{frame}{Extensions of Base RL algorithms}
+\small
 \begin{itemize}
-    \item \textbf{Eligibility traces}: update not only the last state--action pair, but all previously visited pairs with a decay factor $\lambda$.
     \item \textbf{Decaying learning rate}: $\alpha$ decreases over time.
+    \item \textbf{Balancing exploration}: $\epsilon$ or $\tau$ decreases over time.
+    \item \textbf{$n$-step returns}: use several future rewards before bootstrapping.
+    \item \textbf{Eligibility traces}: update not only the last state--action pair, but all previously visited pairs with a decay factor $\lambda$.
+    \item \textbf{Experience replay}: store transitions and learn from them more than once.
+    \item \textbf{Function approximation}: represent $Q(s,a)$ with a parameterized function $Q_\theta(s,a)$.
+    \item \textbf{Double Q-learning}: reduce overestimation from the maximization step.
     \item \textbf{Hybrid models}: combine model-based and model-free components.
+    \item \textbf{Policy gradients}: learn a policy $\pi_\theta(a\mid s)$ directly, rather than learning $Q(s,a)$.
+    \item \textbf{Deep RL}: use deep neural networks to represent $Q(s,a)$ or $\pi(a\mid s)$ to handle high-dimensional state spaces.
 \end{itemize}
 \end{frame}
 
@@ -469,40 +818,96 @@ M: (s,a) \mapsto (s',r)
 \end{frame}
 
 
-\begin{frame}{Deep Reinforcement Learning}
-\centerline{\includegraphics[height=.75\textheight,keepaspectratio,trim=3cm 2.5cm 3cm 0cm,clip]{../figures/deepRLscheme_mnih_etal15nature}}
+% \begin{frame}{Deep Reinforcement Learning}
+% \centerline{\includegraphics[height=.75\textheight,keepaspectratio,trim=3cm 2.5cm 3cm 0cm,clip]{../figures/deepRLscheme_mnih_etal15nature}}
+% \end{frame}
+
+\begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
+\begin{itemize}
+    \item \textbf{Architecture:} Replace Q-table with a  neural network $Q_{\theta}$, with weights $\theta$; use it to estimate $Q(s,a)$. Generally, the input is a state $s$ and the output is a vector of Q-values, one for each action $a$.
+\end{itemize}
+% add dq.png
+\begin{center}
+\includegraphics[width=.8\linewidth]{../figures/dq.png}
+\end{center}
 \end{frame}
 
-\begin{frame}{Deep Q-Learning (Mnih et al. 2015)}
+% \begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
+% \begin{itemize}
+%     \item \textbf{Training:} Remember that the Q-learning update rule is:
+%     \[
+%     Q_{t+1}(s_t,a_t) = Q_t(s_t,a_t) + \alpha\left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_t(s_{t+1},a) - Q_t(s_t,a_t)\right)
+%     \]
+%     \item In DQN, we replace the Q-table with a neural network $Q_\theta(s,a)$, and we train it to minimize the prediction error:
+%     \[
+%     \mathcal{L}(\theta) = \mathbb{E}_{(s_t,a_t,r_t,s_{t+1})\sim D}\left[\left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_\theta(s_{t+1},a) - Q_\theta(s_t,a_t)\right)^2\right]
+%     \]
+% \end{itemize}
+% \end{frame}
+
+\begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
 \begin{itemize}
-    \item Replace Q-table with a  neural network $Q$, with weights $\theta$; use it to compute Q-value of current state
-    \item Make a copy of the Q-network (the \emph{target-network} $\hat{Q}$); use it to compute Q-value of target states
-    \item Learn in batches: act in the world (choose actions using $\epsilon$-greedy) and gather data 
-    \item Optimize Q-network (mimize prediction error) via gradient descent on a batch of observations
-    \item Occasionally copy $Q$ into $\hat{Q}$
+    \item \textbf{Training:} Remember that the Q-learning update rule is:
+    \[
+    Q_{t+1}(s_t,a_t) = Q_t(s_t,a_t) + \alpha\left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_t(s_{t+1},a) - Q_t(s_t,a_t)\right)
+    \]
+    with the prediction error being the difference between the target and the current estimate:
+\[
+\delta_t = \overbrace{R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_t(s_{t+1},a)}^{\text{\scriptsize target}}
+           \phantom{..} - \overbrace{Q_t(s_t,a_t)}^{\text{\scriptsize current estimate}}
+\]
+    \item In DQN, we replace the Q-table with a neural network $Q_\theta(s,a)$, and we train it to minimize the prediction error, rewritten as a mean squared error loss function between the target and the current estimate:
+    \[
+    \mathcal{L}(\theta) = \mathbb{E}_{(s_t,a_t,r_t,s_{t+1})\sim D}\left[\left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_\theta(s_{t+1},a) - Q_\theta(s_t,a_t)\right)^2\right]
+    \]
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Deep Q-Learning (Mnih et al. 2015)}
-\includegraphics[height=.8\textheight,trim=0cm 0cm 0cm 0cm,clip]{../figures/deepRL_mnih_etal15nature}\\
+\begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
+\begin{itemize}
+    \item \textbf{Experience replay:} act in the world (choose actions using $\epsilon$-greedy) and gather data. Save transitions $(s,a,r,s')$ in a replay buffer.
+    Then uniformly sample mini-batches of transitions from the buffer to train the network. This breaks correlations between sequential data and stabilizes training.
+    \item Training is done by stochastic gradient descent on the loss function $\mathcal{L}(\theta)$, using the sampled mini-batches:
+    \[
+    \nabla \mathcal{L}(\theta) \approx \frac{1}{N}\sum_{i=1}^{N}\nabla \left(R(s_{t+1}) + \gamma \max_{a\in\mathcal{A}} Q_\theta(s_{t+1},a) - Q_\theta(s_t,a_t)\right)^2
+    \]
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Deep Q-Learning (Mnih et al. 2015)}
+\begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
+\begin{center}
+\includegraphics[height=.8\textheight,trim=0cm 0cm 0cm 0cm,clip]{../figures/deepRL_mnih_etal15nature}\\
+\end{center}
+\end{frame}
+
+\begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
+\begin{center}
 \includegraphics[height=.75\textheight,trim=0cm 0cm 0cm 0cm,clip]{../figures/deepRL_minh15-firstpage}
 \includegraphics[height=.75\textheight,trim=0cm 0cm 0cm 0cm,clip]{../figures/learningtoseeandact}\\
+\end{center}
 \end{frame}
 
-\begin{frame}{Deep Reinforcement Learning}
-\begin{itemize}
-    \item Deep reinforcement learning
-    \item Learn Q-values with deep neural networks
-\end{itemize}
-
-\vfill
+\begin{frame}{Deep Reinforcement Learning (DQN, Mnih et al. 2015)}
 \begin{center}
 \small A tutorial on deep reinforcement learning\\
 \url{https://wiki.pathmind.com/deep-reinforcement-learning}
 \end{center}
+\end{frame}
+
+\begin{frame}{Frontiers}
+\small
+\begin{itemize}
+    \item \textbf{World models}: learn predictive simulators and plan through imagined futures.
+    \item \textbf{Offline RL}: learn from logged data when online trial and error is costly or unsafe.
+    \item \textbf{Foundation-model agents}: combine pretrained language and vision models with RL for planning and tool use.
+    \item \textbf{Safe RL}: maximize reward while respecting constraints during learning and deployment.
+    \item \textbf{Multi-agent RL}: learn to coordinate, compete, and communicate with other agents.
+\end{itemize}
+
+\vfill
+\begin{alertblock}{Central challenge}
+Build agents that generalize reliably beyond their training environments and improve safely from limited real-world interaction.
+\end{alertblock}
 \end{frame}
 
 
